@@ -12,7 +12,7 @@ class User {
   /** Register new user. Returns
    *    {username, password, first_name, last_name, phone}
    */
-  static async register({ username, password, first_name, last_name, phone }) {
+  static async register(username, password, first_name, last_name, phone) {
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
     const results = await db.query(
       `INSERT INTO users (username, 
@@ -39,7 +39,7 @@ class User {
       [username]);
 
     const user = result.rows[0];
-    return Boolean(user && await bcrypt.compare(password, user.password) === true);
+    return Boolean(user  && await bcrypt.compare(password, user.password) === true);
   }
 
   /** Update last_login_at for user */
