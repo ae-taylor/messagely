@@ -39,10 +39,10 @@ router.post("/register", async function (req, res, next) {
         return res.json({ message: "registration failed" })
     }
 
-    const isAuthenticated = await User.authenticate(user.username, user.password);
-
+    const isAuthenticated = await User.authenticate(username, password);
+    console.log(`are we authenticated? `, isAuthenticated)
     if (isAuthenticated === true) {
-        const token = jwt.sign({ username }, SECRET_KEY);
+        const token = jwt.sign({ username }, SECRET_KEY.SECRET_KEY);
         return res.json({ token })
     } else {
         return res.json({ message: "invalid credentials" })

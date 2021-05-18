@@ -38,8 +38,8 @@ class User {
           WHERE username = $1`,
       [username]);
 
-    const user = result.rows[0];
-    return Boolean(user  && await bcrypt.compare(password, user.password) === true);
+    const hashed = result.rows[0];
+    return Boolean(hashed) && await bcrypt.compare(password, hashed.password) === true;
   }
 
   /** Update last_login_at for user */
@@ -61,6 +61,7 @@ class User {
   /** All: basic info on all users:
    * [{username, first_name, last_name}, ...] */
   static async all() {
+    console.log(`we made it to User.all()`)
     const result = await db.query(
       `SELECT username, first_name, last_name
        FROM users
@@ -68,6 +69,7 @@ class User {
     );
 
     const users = result.rows;
+    console.log(users)
     return users;
   }
 
